@@ -7,8 +7,8 @@ blog_post_file = os.path.join(script_dir, "blog_post.txt")
 
 # WordPress API Credentials
 WP_URL = "https://www.webdesignnerd.com/wp-json/wp/v2/posts"
-WP_USER = "your_username"
-WP_APP_PASSWORD = "your_application_password"
+WP_USER = "a2c11527_admin"
+WP_APP_PASSWORD = "WuglasDial235!!"
 
 # Read the generated blog post
 with open(blog_post_file, "r", encoding="utf-8") as file:

@@ -4,7 +4,7 @@ import os
 import random
 
 # Get the correct GitHub directory
-script_dir = "C:\\Users\\doug\\WDN-auto-blog-posts"
+script_dir = "/mnt/c/Users/doug/WDN-auto-blog-posts"
 
 # Define the full path to topics.txt
 topics_file = os.path.join(script_dir, "topics.txt")

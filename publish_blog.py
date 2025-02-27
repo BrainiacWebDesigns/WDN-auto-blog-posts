@@ -1,24 +1,32 @@
 #!/usr/bin/env python3
 import os
+from dotenv import load_dotenv
 import requests
+import json
 
-# Load WordPress API credentials from environment variables.
+# Load environment variables from the .env file (if it exists)
+load_dotenv()
+
+# Retrieve the OpenAI API key (even if not used here, it’s loaded for consistency)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+# Retrieve WordPress API credentials from environment variables.
 WP_URL = os.getenv("WP_URL", "https://www.webdesignnerd.com/wp-json/wp/v2")
-WP_USERNAME = os.getenv("a2c11527_admin")
-WP_PASSWORD = os.getenv("dgJk anmN SJb5 VyNI VCJM Jyg6")
+WP_USERNAME = os.getenv("WP_USERNAME")
+WP_PASSWORD = os.getenv("WP_PASSWORD")
 
 def publish_blog():
-    # Read the generated blog content from the current directory.
+    # Read the generated blog content from blog_post.txt.
     try:
         with open("blog_post.txt", "r", encoding="utf-8") as f:
             content = f.read()
     except FileNotFoundError:
-        print("❌ blog_post.txt not found in the current directory.")
+        print("❌ blog_post.txt not found. Please generate a blog post first.")
         return
 
     # Prepare the post data.
     data = {
-        "title": "Test Post: Automated Blog Post",
+        "title": "Test Post: Automated Blog Post",  # Update dynamically if needed.
         "content": content,
         "status": "publish"  # Use "draft" if you prefer to review before publishing.
     }

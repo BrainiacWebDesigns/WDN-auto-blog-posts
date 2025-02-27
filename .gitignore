@@ -4,5 +4,6 @@ venv/
 # Ignore generated blog post output
 blog_post.txt
 
+# Ignore env credentials file
 .env
 

@@ -1,9 +1,18 @@
 #!/usr/bin/env python3
 import os
+from dotenv import load_dotenv
 from openai import OpenAI
 
-# Initialize the OpenAI client using the API key from the environment variable.
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Load environment variables from .env file (if it exists)
+load_dotenv()
+
+# Retrieve the API key from the environment variable
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise Exception("OPENAI_API_KEY environment variable not set. Please set it in your .env file or your shell.")
+
+# Initialize the OpenAI client using the API key
+client = OpenAI(api_key=api_key)
 
 def generate_post(topic):
     # Create an SEO keyword from the topic (lowercase, hyphen-separated)

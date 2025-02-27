@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
-cd /home/a2c11527_admin/WDN-auto-blog-posts
-git pull origin main
-python3 update_topics.py
+# Change to the directory where this script is located (repository root)
+cd "$(dirname "$0")" || { echo "Failed to change directory to the script location."; exit 1; }
 
-# Generate first blog post
-./generate_blog.sh
+echo "Current directory: $(pwd)"
 
-# Generate second blog post
-./generate_blog.sh
+# Pull the latest changes from GitHub.
+echo "Pulling latest changes..."
+git pull origin main || { echo "Git pull failed."; exit 1; }
+
+# Update trending topics.
+echo "Updating trending topics..."
+python3 update_topics.py || { echo "Failed to update trending topics."; exit 1; }
+
+# Generate the first blog post.
+echo "Generating first blog post..."
+./generate_blog.sh || { echo "Failed to generate first blog post."; exit 1; }
+
+# Generate the second blog post.
+echo "Generating second blog post..."
+./generate_blog.sh || { echo "Failed to generate second blog post."; exit 1; }
+
+echo "Full automation script executed successfully."

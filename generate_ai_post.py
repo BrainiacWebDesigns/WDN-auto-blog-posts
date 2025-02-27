@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import os
-import openai
+from openai import OpenAI
 
-# Load the OpenAI API key from an environment variable
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Initialize the OpenAI client using the API key from the environment variable
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_post(topic):
     # Create an SEO keyword from the topic (lowercase, hyphen-separated)
@@ -42,18 +42,21 @@ You are a highly skilled **SEO copywriter, web design expert, and digital market
    - End with a **strong, persuasive CTA** encouraging readers to take action (e.g., sign up, purchase a service, or contact www.webdesignnerd.com).
 
 ## **Covered Topics (Rotate Per Post):**
-Each post should cover a **unique** topic related to web design, SEO, digital marketing, and e-commerce. (A list of topics follows for reference.)
+Each post should cover a **unique** topic related to web design, SEO, digital marketing, and e-commerce.
 
 The **goal** is to generate **high-quality, search-optimized blog content** that attracts organic traffic to **www.webdesignnerd.com** and converts readers into customers.
 
 Ensure the final output is **fully formatted, visually structured, and SEO-ready**, with AI-generated images **automatically embedded**.
     """
-    response = openai.ChatCompletion.create(
+    
+    # Use the new client interface to call the chat completion endpoint
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7
     )
-    return response["choices"][0]["message"]["content"].strip()
+    
+    return response.choices[0].message.content.strip()
 
 def main(topic):
     blog_content = generate_post(topic)

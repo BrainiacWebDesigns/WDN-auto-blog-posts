@@ -2,7 +2,7 @@
 import os
 from openai import OpenAI
 
-# Initialize the OpenAI client using the API key from the environment variable
+# Initialize the OpenAI client using the API key from the environment variable.
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_post(topic):
@@ -49,7 +49,6 @@ The **goal** is to generate **high-quality, search-optimized blog content** that
 Ensure the final output is **fully formatted, visually structured, and SEO-ready**, with AI-generated images **automatically embedded**.
     """
     
-    # Use the new client interface to call the chat completion endpoint
     response = client.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}],

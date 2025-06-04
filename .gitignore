@@ -9,3 +9,8 @@ blog_post.txt
 __pycache__/
 tests/__pycache__/
 
+# Ignore repository artifacts and nested Git repositories
+bfg.jar
+WDN-auto-blog-posts.git/
+**/.git/
+

@@ -23,7 +23,7 @@ git pull origin main
 echo "Updating trending topics..."
 python3 update_topics.py
 
-echo "Generating first blog post..."
+echo "Generating blog post..."
 # Read a topic from topics.txt
 TOPIC=$(head -n 1 topics.txt)
 if [ -z "$TOPIC" ]; then

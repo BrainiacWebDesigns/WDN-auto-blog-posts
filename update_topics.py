@@ -1,6 +1,32 @@
 #!/usr/bin/env python3
-import requests
-from bs4 import BeautifulSoup
+try:
+    import requests  # type: ignore
+except Exception:  # pragma: no cover - fallback when requests isn't installed
+    from urllib import request as _urllib_request
+
+    class _Response:
+        def __init__(self, text: str):
+            self.text = text
+
+    class _Requests:
+        def get(self, url, headers=None):
+            with _urllib_request.urlopen(url) as resp:
+                return _Response(resp.read().decode("utf-8", errors="ignore"))
+
+    requests = _Requests()
+
+try:
+    from bs4 import BeautifulSoup  # type: ignore
+except Exception:  # pragma: no cover - use regex parser if bs4 isn't available
+    import re
+
+    def _extract_h2(html: str):
+        pattern = re.compile(r"<h2[^>]*>(.*?)</h2>", re.IGNORECASE | re.DOTALL)
+        for match in pattern.findall(html):
+            text = re.sub(r"<[^>]+>", "", match).strip()
+            if text:
+                yield text
+
 import os
 import random
 
@@ -29,12 +55,17 @@ def fetch_trending_topics():
     for url in sources:
         try:
             response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
-            soup = BeautifulSoup(response.text, "lxml")
-            # Extract headlines as trending topics from <h2> tags.
-            for h2 in soup.find_all("h2"):
-                topic = h2.get_text(strip=True)
-                if topic and len(topic) > 5:
-                    trending_topics.append(topic)
+            if 'BeautifulSoup' in globals():
+                soup = BeautifulSoup(response.text, "lxml")  # type: ignore[name-defined]
+                # Extract headlines as trending topics from <h2> tags.
+                for h2 in soup.find_all("h2"):
+                    topic = h2.get_text(strip=True)
+                    if topic and len(topic) > 5:
+                        trending_topics.append(topic)
+            else:
+                for topic in _extract_h2(response.text):  # type: ignore[name-defined]
+                    if len(topic) > 5:
+                        trending_topics.append(topic)
         except Exception as e:
             print(f"⚠️ Error scraping {url}: {e}")
     return list(set(trending_topics))  # Remove duplicates

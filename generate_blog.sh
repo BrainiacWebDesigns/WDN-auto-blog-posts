@@ -28,3 +28,6 @@ else
     echo "Error: blog_post.txt not found."
     exit 1
 fi
+
+echo "Blog generation complete."
+exit 0

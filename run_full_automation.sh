@@ -1,8 +1,12 @@
 #!/bin/bash
 
-# Load environment variables properly
+# Determine the directory of this script so relative paths work even when the
+# script is called from elsewhere.
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+
+# Load environment variables from the .env file located in the script's directory
 set -a
-source /home/doug/WDN-auto-blog-posts/.env
+source "$SCRIPT_DIR/.env"
 set +a
 
 # Debugging - Print loaded credentials

@@ -6,4 +6,6 @@ blog_post.txt
 
 # Ignore env credentials file
 .env
+__pycache__/
+tests/__pycache__/
 

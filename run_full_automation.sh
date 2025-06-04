@@ -11,13 +11,13 @@ set +a
 
 # Debugging - Print loaded credentials
 echo "WP_USERNAME='$WP_USERNAME'"
-echo "WP_PASSWORD Length: ${#WP_PASSWORD}"
+# echo "WP_PASSWORD Length: ${#WP_PASSWORD}"
 
 # Activate virtual environment before running any Python script
-source ~/WDN-auto-blog-posts/venv/bin/activate
+source "$SCRIPT_DIR/venv/bin/activate"
 
 # Navigate to the project directory
-cd /home/doug/WDN-auto-blog-posts || exit
+cd "$SCRIPT_DIR" || exit
 
 # Pull latest changes from GitHub
 echo "Pulling latest changes..."
